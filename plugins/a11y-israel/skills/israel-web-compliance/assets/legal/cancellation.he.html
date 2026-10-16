@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ביטול עסקה — [שם העסק]</title>
+    <!--
+      עמוד היעד של הקישור הייעודי לביטול עסקה (חוק הגנת הצרכן, סעיף 14ט(ב)): הקישור חייב להופיע בדף הבית
+      במקום בולט — בפועל, בפוטר של כל עמוד. דרכי הביטול חייבות להופיע בסמוך לקישור ובאותיות ברורות (14ט(ה)-(ו)).
+      ראו references/consumer-protection.md. פרטים שרק בעל העסק יודע — [בסוגריים].
+      מותר להיטיב עם הצרכן (למשל 30 יום, בלי דמי ביטול). אסור להחמיר מהחוק.
+      טופס הביטול: לחבר לאותו מנגנון שליחה שהאתר כבר משתמש בו (פעולת שרת / API / שירות טפסים), ולשלוח אישור במייל.
+    -->
+    <style>
+      body { margin: 0; font-family: system-ui, Arial, sans-serif; line-height: 1.7; color: #18181b; background: #fff; }
+      main { max-width: 48rem; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+      h1 { font-size: 2rem; }
+      h2 { font-size: 1.35rem; margin-top: 2rem; }
+      a { color: #1d4ed8; }
+      .ways { border: 2px solid #18181b; border-radius: .5rem; padding: 1rem 1.25rem; font-size: 1.05rem; }
+      form { display: grid; gap: .9rem; max-width: 30rem; }
+      label { font-weight: 600; display: block; margin-bottom: .25rem; }
+      input, textarea { width: 100%; font: inherit; padding: .55rem .7rem; border: 1px solid #52525b; border-radius: .4rem; }
+      button { font: 600 1rem system-ui, Arial, sans-serif; min-height: 44px; padding: .5rem 1.5rem; border: 0; border-radius: .4rem; background: #0a2353; color: #fff; cursor: pointer; }
+      :focus-visible { outline: 3px solid #f5b400; outline-offset: 2px; }
+      .hint { font-size: .9rem; color: #3f3f46; }
+    </style>
+  </head>
+  <body>
+    <main id="main-content">
+      <h1>ביטול עסקה</h1>
+
+      <section class="ways" aria-labelledby="ways-title">
+        <h2 id="ways-title" style="margin-top:0">איך מבטלים</h2>
+        <ul>
+          <li><strong>בטופס בעמוד הזה</strong> (למטה).</li>
+          <li><strong>בדוא"ל:</strong> [מייל]</li>
+          <li><strong>בטלפון:</strong> [מספר], [ימים ושעות]</li>
+          <li><strong>בדואר רשום:</strong> [כתובת]</li>
+        </ul>
+        <p>בהודעה ציינו: שם מלא, מספר הזמנה או תאריך, ומספר טלפון או דוא"ל לחזרה.</p>
+      </section>
+
+      <h2>עד מתי אפשר לבטל</h2>
+      <ul>
+        <li><strong>מוצר:</strong> מיום ההזמנה ועד 14 יום מיום קבלת המוצר או מסמך פרטי העסקה — המאוחר מביניהם.</li>
+        <li><strong>שירות או מנוי:</strong> בתוך 14 יום מיום העסקה או מקבלת מסמך פרטי העסקה — המאוחר. שירות חד-פעמי — לפחות יומיים שאינם ימי מנוחה לפני מועד השירות.</li>
+        <li>
+          <strong>אדם עם מוגבלות, אזרח ותיק (מעל 65) או עולה חדש:</strong> בתוך 4 חודשים, אם ההזמנה כללה שיחה
+          איתנו (טלפון, וואטסאפ או צ'אט). נבקש להציג תעודה מתאימה.
+        </li>
+      </ul>
+
+      <h2>החזר כספי ודמי ביטול</h2>
+      <ul>
+        <li>נחזיר את הכסף בתוך 14 יום מקבלת הודעת הביטול, לאמצעי התשלום שבו שילמת.</li>
+        <li>
+          דמי ביטול: [5% מהמחיר או 100 ₪, הנמוך מביניהם / ללא דמי ביטול]. בביטול בגלל פגם, אי-התאמה למה שהוזמן
+          או איחור באספקה — אין דמי ביטול.
+        </li>
+        <li>מוצר שהתקבל — יש להחזיר [לכתובת / באיסוף שלנו], [על חשבון מי ההחזרה].</li>
+      </ul>
+
+      <h2>מה לא ניתן לבטל</h2>
+      <!-- להשאיר רק מה שרלוונטי למה שהעסק מוכר: -->
+      <ul>
+        <li>מוצרים פסידים (למשל מזון).</li>
+        <li>מוצרים שיוצרו או הותאמו במיוחד בשבילך.</li>
+        <li>תוכנה, תוכן דיגיטלי או מדיה שנפתחה אריזתה המקורית.</li>
+        <li>הארחה, נסיעה, חופש או בילוי — כשהביטול בתוך 7 ימים שאינם ימי מנוחה לפני המועד.</li>
+      </ul>
+
+      <h2>טופס ביטול</h2>
+      <form id="cancel-form" novalidate>
+        <div><label for="c-name">שם מלא</label><input id="c-name" name="name" autocomplete="name" required /></div>
+        <div><label for="c-order">מספר הזמנה או תאריך העסקה</label><input id="c-order" name="order" required /></div>
+        <div><label for="c-email">דוא"ל לאישור</label><input id="c-email" name="email" type="email" autocomplete="email" required /></div>
+        <div><label for="c-reason">סיבת הביטול <span class="hint">(רשות)</span></label><textarea id="c-reason" name="reason" rows="3"></textarea></div>
+        <p class="hint">
+          הפרטים ישמשו רק לטיפול בביטול ולהחזר הכספי. מסירתם רשות, אבל בלעדיהם לא נוכל לזהות את העסקה.
+          <a href="/privacy">למדיניות הפרטיות</a>
+        </p>
+        <button type="submit">שליחת הודעת ביטול</button>
+        <p role="status" aria-live="polite" id="c-status"></p>
+      </form>
+
+      <p><small>עודכן לאחרונה: [DD.MM.YYYY]</small></p>
+    </main>
+  </body>
+</html>

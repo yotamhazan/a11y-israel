@@ -22,11 +22,11 @@
 מתאים לאתרים בלי גישה לקבצים (Wix, Shopify, בוני אתרים):
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v2.1.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"
+<script src="https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v3.0.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"
         data-statement-url="/accessibility" defer></script>
 ```
 
-הקובץ נטען משרת jsDelivr, ולכן כתובת ה-IP של הגולש עוברת אליו. יש לציין את זה במדיניות הפרטיות של האתר. הגרסה (`@v2.1.0`) נעולה בכתובת, כך שעדכון עתידי לא ישנה אתר קיים בלי שתבחרו בזה.
+הקובץ נטען משרת jsDelivr, ולכן כתובת ה-IP של הגולש עוברת אליו. יש לציין את זה במדיניות הפרטיות של האתר. הגרסה (`@v3.0.0`) נעולה בכתובת, כך שעדכון עתידי לא ישנה אתר קיים בלי שתבחרו בזה.
 
 ## הגדרות (כולן אופציונליות)
 

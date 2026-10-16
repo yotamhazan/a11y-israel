@@ -1,15 +1,16 @@
 {
   "name": "a11y-israel",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "private": true,
   "description": "Israeli web compliance skill for Claude Code and a self-contained accessibility menu for any website",
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "test": "node tests/widget.test.mjs && node tests/cookies.test.mjs",
+    "test": "node tests/widget.test.mjs && node tests/cookies.test.mjs && node tests/scan.test.mjs",
     "validate": "claude plugin validate ./plugins/a11y-israel && claude plugin validate ."
   },
   "devDependencies": {
+    "axe-core": "^4.10.2",
     "playwright": "1.49.1"
   }
 }

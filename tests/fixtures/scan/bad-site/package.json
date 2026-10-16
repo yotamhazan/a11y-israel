@@ -1,0 +1,1 @@
+{ "name": "bad-site", "private": true, "dependencies": { "react": "18.3.1", "vite": "5.4.0" } }

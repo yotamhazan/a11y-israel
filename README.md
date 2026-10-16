@@ -9,10 +9,11 @@
    - שום כלי מעקב לא נטען לפני הסכמה.
    - Google Consent Mode v2.
    - עיצוב זהה לתפריט הנגישות.
-3. **סקיל ל-Claude Code** שבודק ובונה אתרים לפי החוק בישראל:
+3. **תוסף ל-Claude Code** שבודק ומתקן אתרים לפי החוק בישראל:
    - נגישות לפי ת"י 5568 חלק 1 ברמה AA (תקנה 35).
-   - פרטיות לפי חוק הגנת הפרטיות, כולל תיקון 13.
-   - מתקין בכל פרויקט את תפריט הנגישות, ואת באנר העוגיות כשהאתר צריך אותו.
+   - פרטיות לפי חוק הגנת הפרטיות, כולל תיקון 13, וחוק הספאם.
+   - הגנת הצרכן באתרים שמוכרים: פרטי העסק, ביטול עסקה, קישור ביטול בדף הבית, מחירים כולל מע"מ.
+   - פקודה אחת שמתקנת הכול: `/a11y-israel:fix`.
 
 > תפריט נגישות הוא כלי עזר לגולש, לא תחליף לאתר נגיש. בית משפט בוחן את האתר עצמו מול התקן — ולכן הסקיל בודק גם את הקוד, הטפסים, הצהרת הנגישות ומדיניות הפרטיות. זה לא ייעוץ משפטי.
 
@@ -34,7 +35,16 @@ claude plugin marketplace add yotamhazan/a11y-israel
 claude plugin install a11y-israel@a11y-israel
 ```
 
-זהו. מעכשיו, בכל פרויקט של אתר לקהל בישראל, Claude מפעיל את הסקיל לבד (אפשר גם ידנית: `/a11y-israel:israel-web-compliance`). הוא בודק את האתר מול החוק, מתקין את תפריט הנגישות ומכין הצהרת נגישות.
+זהו. מעכשיו בכל פרויקט:
+
+| פקודה | מה היא עושה |
+|---|---|
+| `/a11y-israel:fix` | **תיקון מלא.** סורקת, שואלת כמה שאלות על העסק, מתקנת את הקוד, מתקינה תפריט נגישות (ובאנר עוגיות אם יש באתר כלי מעקב), יוצרת הצהרת נגישות, מדיניות פרטיות, תקנון וביטול עסקה, מוסיפה אותם לפוטר, משאירה כללים ב-`CLAUDE.md` כדי שגם מה שייבנה אחר כך יהיה נגיש, סורקת שוב ומוציאה דוח לפני/אחרי. |
+| `/a11y-israel:audit` | **בדיקה בלבד**, בלי לשנות קבצים. דוח בעברית: חוסם / חשוב / מומלץ. |
+
+גם בלי פקודה, בכל עבודה על אתר לקהל בישראל Claude מפעיל את הסקיל לבד ושומר על הכללים.
+
+הסריקה עצמה היא סקריפט קבוע (`scripts/scan.mjs`), כך שאותו אתר מקבל אותה רשימת ממצאים בכל הרצה, ואפשר להשוות לפני ואחרי. אפשר להריץ אותה גם בלי Claude: `node scan.mjs <תיקיית הפרויקט>`.
 
 עדכון לגרסה חדשה: `claude plugin marketplace update a11y-israel` ואז `claude plugin update a11y-israel@a11y-israel`.
 
@@ -45,7 +55,7 @@ claude plugin install a11y-israel@a11y-israel
 או ישירות:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v2.1.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"
+<script src="https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v3.0.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"
         data-icon-style="white-blue" data-size="medium" data-position="bottom-right"
         data-statement-url="/accessibility" defer></script>
 ```
@@ -66,13 +76,20 @@ claude plugin install a11y-israel@a11y-israel
 .claude-plugin/marketplace.json          # הגדרת ה-marketplace
 plugins/a11y-israel/
   .claude-plugin/plugin.json             # הגדרת התוסף
+  skills/fix/SKILL.md                    # /a11y-israel:fix — תיקון מלא
+  skills/audit/SKILL.md                  # /a11y-israel:audit — בדיקה בלבד
   skills/israel-web-compliance/
-    SKILL.md                             # הסקיל
-    references/accessibility.md          # ת"י 5568: דרישות, שינויים ישראליים, הצהרת נגישות
+    SKILL.md                             # הסקיל הראשי (נדלק לבד בכל פרויקט רלוונטי)
+    references/accessibility.md          # ת"י 5568: דרישות, שינויים ישראליים, הצהרת נגישות, פטורים
     references/privacy.md                # תיקון 13: יידוע, מאגרים, ממונה, אבטחה, עיצומים, דיוור
+    references/consumer-protection.md    # חוק הגנת הצרכן: גילוי, ביטול עסקה, קישור ביטול, מחיר כולל מע"מ
+    scripts/scan.mjs                     # סריקה סטטית, בלי תלויות
+    scripts/browser-check.mjs            # בדיקה בדפדפן: עוגיות לפני הסכמה, axe, מקלדת, 320px
     assets/a11y-widget/                  # תפריט הנגישות, דף הגדרה, דמו, תבנית הצהרה
     assets/cookie-consent/               # באנר עוגיות: vanilla-cookieconsent 3.1.0 + הגדרה ועיצוב ישראליים
-tests/                                   # בדיקה מקצה לקצה בדפדפן אמיתי
+    assets/legal/                        # מדיניות פרטיות, תקנון, ביטול עסקה, קטעים לטפסים ולפוטר
+    assets/project-rules/                # הכללים שנכתבים ל-CLAUDE.md של הפרויקט
+tests/                                   # בדיקות בדפדפן אמיתי + אתר "רע" ואתר "טוב" לסורק
 ```
 
 ## פיתוח
