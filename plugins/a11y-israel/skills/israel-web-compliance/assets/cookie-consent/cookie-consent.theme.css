@@ -1,0 +1,35 @@
+/* a11y-israel colors for vanilla-cookieconsent: same navy / royal blue as the accessibility menu.
+   Every text/background pair here is at least 4.5:1 (SI 5568 1.4.3). Load after cookieconsent.css. */
+#cc-main {
+  --cc-font-family: system-ui, -apple-system, 'Segoe UI', Arial, sans-serif;
+  --cc-bg: #ffffff;
+  --cc-primary-color: #0a2353;
+  --cc-secondary-color: #27324a;
+  --cc-btn-primary-bg: #0a2353;
+  --cc-btn-primary-color: #ffffff;
+  --cc-btn-primary-border-color: #0a2353;
+  --cc-btn-primary-hover-bg: #1450c8;
+  --cc-btn-primary-hover-color: #ffffff;
+  --cc-btn-primary-hover-border-color: #1450c8;
+  --cc-btn-secondary-bg: #eef4fd;
+  --cc-btn-secondary-color: #0a2353;
+  --cc-btn-secondary-border-color: #0a2353;
+  --cc-btn-secondary-hover-bg: #d3e0f5;
+  --cc-btn-secondary-hover-color: #0a2353;
+  --cc-btn-secondary-hover-border-color: #0a2353;
+  --cc-toggle-on-bg: #1450c8;
+  --cc-toggle-off-bg: #5b6474;
+  --cc-cookie-category-block-bg: #eef4fd;
+  --cc-cookie-category-block-border: #d3e0f5;
+  --cc-cookie-category-block-hover-bg: #e2ecfb;
+  --cc-cookie-category-block-hover-border: #d3e0f5;
+  --cc-footer-bg: #eef4fd;
+  --cc-footer-color: #27324a;
+  --cc-footer-border-color: #d3e0f5;
+  --cc-link-color: #1450c8;
+}
+#cc-main a { text-decoration: underline; text-underline-offset: 3px; }
+#cc-main :focus-visible { outline: 3px solid #f5b400 !important; outline-offset: 2px; }
+/* Buttons at least 44px tall for touch. */
+#cc-main .cm__btn, #cc-main .pm__btn { min-height: 44px; }
+@media print { #cc-main { display: none !important; } }

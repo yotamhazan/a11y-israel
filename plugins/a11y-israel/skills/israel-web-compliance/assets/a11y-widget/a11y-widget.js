@@ -1,5 +1,5 @@
 /*!
- * a11y-widget v2 — a self-contained accessibility menu for any website.
+ * a11y-widget v2.1 — a self-contained accessibility menu for any website.
  * One file, no dependencies, no network calls, no tracking.
  *
  * Usage (ideally before </body>):
@@ -32,7 +32,7 @@
   window.__a11ywLoaded = true;
 
   var currentScript = document.currentScript;
-  var VERSION = '2.0.0';
+  var VERSION = '2.1.0';
   var TEXT_SCALE_STEPS = [100, 115, 130, 150, 175, 200];
   var CONTRAST_MODES = ['dark', 'light', 'invert', 'monochrome'];
   var TOGGLES = [
@@ -56,10 +56,15 @@
     'black-white': { fg: '#000000', bg: '#ffffff', theme: 'mono' },
     'white-black': { fg: '#ffffff', bg: '#000000', theme: 'mono' },
   };
-  /** Panel palettes, inspired by a flat navy / royal blue / sky accessibility icon set. */
+  /**
+   * Panel palettes. The panel shares its design with the cookie banner (vanilla-cookieconsent +
+   * ../cookie-consent/cookie-consent.theme.css): same tokens, sizes and radii, so both look like one system.
+   * ink = text and primary buttons, ink2 = secondary text, accent = hover and "on" switches,
+   * pale/line = blocks and secondary buttons, hover = block hover, off = "off" switches, sep = separators.
+   */
   var THEMES = {
-    blue: { navy: '#0a2353', blue: '#1450c8', sky: '#a9c8f5', pale: '#eef4fd', line: '#d3e0f5' },
-    mono: { navy: '#000000', blue: '#1f1f1f', sky: '#b8b8b8', pale: '#f4f4f5', line: '#d4d4d8' },
+    blue: { ink: '#0a2353', ink2: '#27324a', accent: '#1450c8', pale: '#eef4fd', line: '#d3e0f5', hover: '#e2ecfb', off: '#5b6474', sep: '#f0f4f7' },
+    mono: { ink: '#000000', ink2: '#3f3f46', accent: '#1f1f1f', pale: '#f4f4f5', line: '#d4d4d8', hover: '#e4e4e7', off: '#52525b', sep: '#f0f0f1' },
   };
   var SIZES = { small: 44, medium: 56, large: 68 };
 
@@ -196,32 +201,19 @@
     );
   }
 
-  // Own two-tone tile icons (24x24): main strokes in the theme navy, `a` = sky accent.
+  // Line icons (24x24), drawn like the cookie banner's: close X, and the check / X inside switch knobs.
   var ICONS = {
-    close: '<path d="M6 6l12 12M18 6L6 18"/>',
-    readableFont: '<path class="a" d="M4 21h16"/><path d="M6 17l6-13 6 13M8.5 12h7"/>',
-    lineSpacing: '<path d="M11 6h10M11 12h10M11 18h10"/><path class="a" d="M5 4v16M3 7l2-3 2 3M3 17l2 3 2-3"/>',
-    letterSpacing: '<path d="M6 15l2.5-7L11 15M13 15l2.5-7L18 15"/><path class="a" d="M3 19h18M5 17l-2 2 2 2M19 17l2 2-2 2"/>',
-    dark: '<path class="f" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
-    light: '<circle class="f" cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="4"/><path class="a" d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
-    invert: '<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>',
-    monochrome: '<path class="f" d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
-    highlightLinks: '<path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path class="a" d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/>',
-    highlightHeadings: '<path d="M5 4v16M15 4v16M5 12h10"/><path class="a" d="M19 11v9"/>',
-    keyboardFocus: '<rect class="f" x="2" y="6" width="20" height="12" rx="2"/><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/>',
-    stopAnimations: '<circle class="f" cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/>',
-    bigCursor: '<path class="f" d="M5 3l14 8-6 1.5L10 19z"/><path d="M5 3l14 8-6 1.5L10 19z"/>',
-    readingGuide: '<path class="a" d="M2 12h20"/><path d="M4 6h16M4 18h10"/>',
-    reset: '<path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/>',
-    statement: '<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h6"/>',
+    close: '<path d="M19.5 4.5l-15 15M4.5 4.5l15 15"/>',
+    on: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+    off: '<path d="M7 7l10 10M17 7L7 17"/>',
   };
 
-  function icon(name, size) {
+  function icon(name, size, strokeWidth) {
     var s = size || 20;
     return (
       '<svg aria-hidden="true" focusable="false" width="' + s + '" height="' + s +
-      '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-      ICONS[name] + '</svg>'
+      '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="' + (strokeWidth || 1.5) +
+      '" stroke-linecap="round" stroke-linejoin="round">' + ICONS[name] + '</svg>'
     );
   }
 
@@ -345,14 +337,14 @@
 
     return [
       ':host{all:initial}',
-      '.root{font:400 14px/1.4 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;letter-spacing:normal;word-spacing:normal;color:' + th.navy +
-        ';--navy:' + th.navy + ';--blue:' + th.blue + ';--sky:' + th.sky + ';--pale:' + th.pale + ';--line:' + th.line + '}',
+      // Same tokens as the cookie banner: 16px system font, .5rem panel radius, .4rem control radius.
+      '.root{font:400 16px/1.15 system-ui,-apple-system,"Segoe UI",Arial,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:normal;word-spacing:normal;color:' + th.ink +
+        ';--ink:' + th.ink + ';--ink2:' + th.ink2 + ';--accent:' + th.accent + ';--pale:' + th.pale + ';--line:' + th.line +
+        ';--hover:' + th.hover + ';--off:' + th.off + ';--sep:' + th.sep + ';--r:.4rem}',
       '.root *{box-sizing:border-box;font:inherit;letter-spacing:inherit;line-height:inherit}',
       ':host(.inverted) .surface{filter:invert(1) hue-rotate(180deg)}',
       'button,a{cursor:pointer;-webkit-tap-highlight-color:transparent}',
       'button:focus-visible,a:focus-visible{outline:3px solid #f5b400;outline-offset:2px}',
-      'svg .a{stroke:var(--sky)}',
-      'svg .f{fill:var(--sky);stroke:none}',
 
       '.launcher{position:fixed;' + side + ':' + cfg.offsetX + 'px;' + launcherY + 'z-index:' + cfg.zIndex +
         ';width:' + cfg.size + 'px;height:' + cfg.size + 'px;padding:0;border:0;border-radius:50%;background:' + style.bg +
@@ -363,34 +355,40 @@
       '.badge{position:absolute;top:-3px;inset-inline-end:-3px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:#f5b400;color:#000;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff}',
 
       '.panel{position:fixed;' + side + ':' + panelSide + 'px;' + panelY + 'z-index:' + (cfg.zIndex + 1) +
-        ';width:360px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;overflow:hidden;background:var(--pale);border-radius:18px;box-shadow:0 24px 60px rgba(10,35,83,.3);border-inline-start:6px solid var(--navy)}',
+        ';width:380px;max-width:calc(100vw - 32px);display:flex;flex-direction:column;overflow:hidden;background:#fff;border-radius:.5rem;box-shadow:0 .625em 1.875em rgba(0,0,2,.3)}',
       '@media (max-width:520px){.panel{' + side + ':16px}}',
       '.panel[hidden]{display:none}',
-      '.panel::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:5px;background:var(--blue);z-index:1}',
-      '.head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 16px 14px 18px;background:var(--navy);color:#fff}',
-      '.head h2{margin:0;display:flex;align-items:center;gap:10px;font-size:18px;font-weight:800}',
-      '.head h2 svg{color:#fff}',
-      '.x{background:rgba(255,255,255,.12);border:0;color:#fff;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center}',
-      '.x:hover{background:rgba(255,255,255,.25)}',
-      '.body{flex:1;overflow-y:auto;padding:16px 16px 16px 20px;display:flex;flex-direction:column;gap:18px}',
-      '.hint{margin:0;font-size:13px;color:#3f4b63}',
-      '.section h3{margin:0 0 10px;font-size:14px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:8px}',
-      '.section h3::before{content:"";width:14px;height:4px;border-radius:2px;background:var(--blue)}',
-      '.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}',
-      '.tile{min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px 8px;border:1.5px solid var(--line);border-radius:14px;background:#fff;color:var(--navy);font-size:14px;font-weight:600;text-align:center;transition:border-color .12s,background-color .12s}',
-      '.tile:hover{border-color:var(--blue)}',
-      '.ico{width:40px;height:40px;border-radius:50%;background:var(--pale);display:flex;align-items:center;justify-content:center;color:var(--navy)}',
-      '.tile[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:#fff}',
-      '.tile[aria-pressed="true"] .ico{background:#fff;color:var(--navy)}',
-      '.size{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;padding:8px;border:1.5px solid var(--line);border-radius:14px;background:#fff}',
-      '.size span{font-weight:700;color:var(--navy)}',
-      '.step{width:44px;height:40px;border:1.5px solid var(--navy);border-radius:10px;background:#fff;color:var(--navy);font-weight:800;font-size:16px}',
-      '.step:hover{background:var(--pale)}',
+      // Header / body / footer: the cookie preferences window (.pm__header / .pm__body / .pm__footer).
+      '.head{display:flex;align-items:center;justify-content:space-between;gap:1em;padding:1em 1.4em;border-bottom:1px solid var(--sep)}',
+      '.head h2{margin:0;font-size:1em;font-weight:600;color:var(--ink)}',
+      '.x{flex:none;width:44px;height:44px;padding:0;border:1px solid var(--ink);border-radius:var(--r);background:var(--pale);color:var(--ink);display:flex;align-items:center;justify-content:center;transition:background-color .15s ease}',
+      '.x:hover{background:var(--line)}',
+      '.body{flex:1;overflow-y:auto;scrollbar-width:thin;overscroll-behavior:contain;padding:1em 1.4em;display:flex;flex-direction:column;gap:1.1em}',
+      '.hint{margin:0;font-size:.9em;line-height:1.5;color:var(--ink2)}',
+      '.section h3{margin:0 0 .5em;font-size:.95em;font-weight:600;color:var(--ink)}',
+      '.list{display:flex;flex-direction:column;gap:.375rem}',
+      // A feature row = a cookie category block with its switch (.pm__section--toggle + .section__toggle).
+      '.row{width:100%;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:1em;padding:1.1em 1.2em;border:1px solid var(--line);border-radius:var(--r);background:var(--pale);color:var(--ink);font-size:.95em;font-weight:600;text-align:start;transition:background-color .25s ease,border-color .25s ease}',
+      '.row:hover{background:var(--hover)}',
+      '.switch{flex:none;position:relative;width:50px;height:23px;border-radius:4em;background:var(--off);box-shadow:0 0 0 1px var(--off);transition:background-color .25s ease,box-shadow .25s ease}',
+      '.knob{position:absolute;top:0;inset-inline-start:0;width:23px;height:23px;border-radius:50%;background:#fff;box-shadow:0 1px 2px rgba(24,32,35,.36);color:var(--off);display:flex;align-items:center;justify-content:center;transition:inset-inline-start .25s ease,color .25s ease}',
+      '.knob svg{display:block}',
+      '.knob .on{display:none}',
+      '.row[aria-pressed="true"] .switch{background:var(--accent);box-shadow:0 0 0 1px var(--accent)}',
+      '.row[aria-pressed="true"] .knob{inset-inline-start:27px;color:var(--accent)}',
+      '.row[aria-pressed="true"] .knob .on{display:block}',
+      '.row[aria-pressed="true"] .knob .off{display:none}',
+      '.size{min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:1em;padding:.5em .7em .5em 1.2em;border:1px solid var(--line);border-radius:var(--r);background:var(--pale)}',
+      '.size span{font-size:.95em;font-weight:600;color:var(--ink)}',
+      '.step{flex:none;width:44px;height:44px;padding:0;border:1px solid var(--ink);border-radius:var(--r);background:#fff;color:var(--ink);font-weight:600;font-size:.95em;transition:background-color .15s ease}',
+      '.step:hover{background:var(--line)}',
       '.step:disabled{opacity:.35;cursor:not-allowed}',
-      '.foot{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 16px 12px 20px;background:#fff;border-top:1px solid var(--line)}',
-      '.foot button,.foot a{display:flex;align-items:center;gap:6px;padding:8px 10px;border-radius:10px;border:0;background:none;color:var(--navy);font-weight:700;font-size:14px}',
-      '.foot a{color:var(--blue);text-decoration:underline;text-underline-offset:4px}',
-      '.foot button:hover{background:var(--pale)}',
+      // Footer buttons = .pm__btn: primary (ink) and secondary (pale with ink border), equal size.
+      '.foot{display:flex;align-items:center;gap:.375rem;padding:1em 1.4em;border-top:1px solid var(--sep)}',
+      '.btn{flex:1;min-height:44px;min-width:110px;display:flex;align-items:center;justify-content:center;padding:.5em 1.5em;border:1px solid var(--ink);border-radius:var(--r);background:var(--ink);color:#fff;font-size:.82em;font-weight:600;text-align:center;text-decoration:none;transition:background-color .15s ease,border-color .15s ease}',
+      '.btn:hover{background:var(--accent);border-color:var(--accent)}',
+      '.btn.secondary{background:var(--pale);color:var(--ink);border-color:var(--ink)}',
+      '.btn.secondary:hover{background:var(--line);border-color:var(--ink)}',
       '.sr{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}',
       '.guide{position:fixed;inset-inline:0;height:0;border-top:4px solid #f5b400;pointer-events:none;z-index:' + (cfg.zIndex + 2) + '}',
     ].join('\n');
@@ -438,16 +436,19 @@
     }
 
     function tile(action, key, pressed) {
+      // The switch is decoration; state is exposed by aria-pressed on the button.
       return (
-        '<button type="button" class="tile" data-action="' + action + '" data-key="' + key +
-        '" aria-pressed="' + pressed + '"><span class="ico">' + icon(key) + '</span><span>' + t(key) + '</span></button>'
+        '<button type="button" class="row" data-action="' + action + '" data-key="' + key + '" aria-pressed="' + pressed +
+        '"><span>' + t(key) + '</span><span class="switch" aria-hidden="true"><span class="knob">' +
+        icon('on', 16, 2.5).replace('<svg', '<svg class="on"') + icon('off', 16, 2.5).replace('<svg', '<svg class="off"') +
+        '</span></span></button>'
       );
     }
 
     function render() {
       var dir = lang() === 'he' ? 'rtl' : 'ltr';
       var statement = cfg.statementUrl
-        ? '<a href="' + cfg.statementUrl.replace(/"/g, '&quot;') + '">' + icon('statement', 16) + t('statement') + '</a>'
+        ? '<a class="btn" href="' + cfg.statementUrl.replace(/"/g, '&quot;') + '">' + t('statement') + '</a>'
         : '';
       var max = TEXT_SCALE_STEPS[TEXT_SCALE_STEPS.length - 1];
 
@@ -458,11 +459,11 @@
         '" aria-controls="a11yw-panel" aria-keyshortcuts="Alt+A" title="' + t('launcher') + '"></button>' +
         '<div class="panel surface" id="a11yw-panel" role="dialog" aria-modal="false" aria-labelledby="a11yw-title"' +
         (open ? '' : ' hidden') + '>' +
-        '<div class="head"><h2 id="a11yw-title">' + universalAccess(26) + t('title') + '</h2>' +
-        '<button type="button" class="x" data-action="close" aria-label="' + t('close') + '">' + icon('close', 18) + '</button></div>' +
+        '<div class="head"><h2 id="a11yw-title">' + t('title') + '</h2>' +
+        '<button type="button" class="x" data-action="close" aria-label="' + t('close') + '">' + icon('close', 20) + '</button></div>' +
         '<div class="body">' +
         '<p class="hint">' + t('hint') + '</p>' +
-        '<div class="section" role="group" aria-labelledby="a11yw-s1"><h3 id="a11yw-s1">' + t('sectionText') + '</h3><div class="grid">' +
+        '<div class="section" role="group" aria-labelledby="a11yw-s1"><h3 id="a11yw-s1">' + t('sectionText') + '</h3><div class="list">' +
         '<div class="size"><button type="button" class="step" data-action="smaller" aria-label="' + t('smaller') + '"' +
         (prefs.textScale <= 100 ? ' disabled' : '') + '><span dir="ltr">A-</span></button><span>' + t('textSize') + ' ' + prefs.textScale +
         '%</span><button type="button" class="step" data-action="larger" aria-label="' + t('larger') + '"' +
@@ -471,12 +472,12 @@
         tile('toggle-pref', 'lineSpacing', prefs.lineSpacing) +
         tile('toggle-pref', 'letterSpacing', prefs.letterSpacing) +
         '</div></div>' +
-        '<div class="section" role="group" aria-labelledby="a11yw-s2"><h3 id="a11yw-s2">' + t('sectionColor') + '</h3><div class="grid">' +
+        '<div class="section" role="group" aria-labelledby="a11yw-s2"><h3 id="a11yw-s2">' + t('sectionColor') + '</h3><div class="list">' +
         CONTRAST_MODES.map(function (m) {
           return tile('contrast', m, prefs.contrast === m);
         }).join('') +
         '</div></div>' +
-        '<div class="section" role="group" aria-labelledby="a11yw-s3"><h3 id="a11yw-s3">' + t('sectionNav') + '</h3><div class="grid">' +
+        '<div class="section" role="group" aria-labelledby="a11yw-s3"><h3 id="a11yw-s3">' + t('sectionNav') + '</h3><div class="list">' +
         ['highlightLinks', 'highlightHeadings', 'keyboardFocus', 'stopAnimations', 'bigCursor', 'readingGuide']
           .map(function (k) {
             return tile('toggle-pref', k, prefs[k]);
@@ -484,7 +485,7 @@
           .join('') +
         '</div></div>' +
         '</div>' +
-        '<div class="foot"><button type="button" data-action="reset">' + icon('reset', 16) + t('reset') + '</button>' + statement + '</div>' +
+        '<div class="foot"><button type="button" class="btn secondary" data-action="reset">' + t('reset') + '</button>' + statement + '</div>' +
         '</div>' +
         '<div class="guide" hidden></div>' +
         '<div class="sr" role="status" aria-live="polite"></div>' +

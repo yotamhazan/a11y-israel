@@ -1,9 +1,18 @@
 # a11y-israel — נגישות ופרטיות לאתרים בישראל
 
-שני דברים ברפוזיטורי אחד:
+שלושה דברים ברפוזיטורי אחד:
 
-1. **תפריט נגישות** לכל אתר — קובץ JavaScript אחד, בלי תלויות, בלי שליחת מידע, בעברית ובאנגלית, עם בחירת צבע, גודל ומיקום.
-2. **סקיל ל-Claude Code** שבודק ובונה אתרים לפי החוק בישראל: נגישות לפי ת"י 5568 חלק 1 ברמה AA (תקנה 35), ופרטיות לפי חוק הגנת הפרטיות כולל תיקון 13 — ומתקין את תפריט הנגישות בכל פרויקט.
+1. **תפריט נגישות** לכל אתר: קובץ JavaScript אחד, בלי תלויות ובלי שליחת מידע, בעברית ובאנגלית, עם בחירת צבע, גודל ומיקום.
+2. **באנר הסכמה לעוגיות** מבוסס [vanilla-cookieconsent](https://github.com/orestbida/cookieconsent) בהגדרה ישראלית:
+   - עברית ו-RTL.
+   - "אישור הכול" ו"רק הכרחיות" באותו משקל.
+   - שום כלי מעקב לא נטען לפני הסכמה.
+   - Google Consent Mode v2.
+   - עיצוב זהה לתפריט הנגישות.
+3. **סקיל ל-Claude Code** שבודק ובונה אתרים לפי החוק בישראל:
+   - נגישות לפי ת"י 5568 חלק 1 ברמה AA (תקנה 35).
+   - פרטיות לפי חוק הגנת הפרטיות, כולל תיקון 13.
+   - מתקין בכל פרויקט את תפריט הנגישות, ואת באנר העוגיות כשהאתר צריך אותו.
 
 > תפריט נגישות הוא כלי עזר לגולש, לא תחליף לאתר נגיש. בית משפט בוחן את האתר עצמו מול התקן — ולכן הסקיל בודק גם את הקוד, הטפסים, הצהרת הנגישות ומדיניות הפרטיות. זה לא ייעוץ משפטי.
 
@@ -36,7 +45,7 @@ claude plugin install a11y-israel@a11y-israel
 או ישירות:
 
 ```html
-<script src="https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v2.0.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"
+<script src="https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v2.1.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"
         data-icon-style="white-blue" data-size="medium" data-position="bottom-right"
         data-statement-url="/accessibility" defer></script>
 ```
@@ -62,6 +71,7 @@ plugins/a11y-israel/
     references/accessibility.md          # ת"י 5568: דרישות, שינויים ישראליים, הצהרת נגישות
     references/privacy.md                # תיקון 13: יידוע, מאגרים, ממונה, אבטחה, עיצומים, דיוור
     assets/a11y-widget/                  # תפריט הנגישות, דף הגדרה, דמו, תבנית הצהרה
+    assets/cookie-consent/               # באנר עוגיות: vanilla-cookieconsent 3.1.0 + הגדרה ועיצוב ישראליים
 tests/                                   # בדיקה מקצה לקצה בדפדפן אמיתי
 ```
 
@@ -78,7 +88,7 @@ npm run validate                  # בדיקת מבנה התוסף (דורש Cla
 
 ## רישיון
 
-הקוד והתוכן — MIT (ראו [LICENSE](LICENSE)). אייקון הנגישות "universal-access" — Font Awesome Free 5.2.0, ברישיון [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+הקוד והתוכן — MIT (ראו [LICENSE](LICENSE)). אייקון הנגישות "universal-access" — Font Awesome Free 5.2.0, ברישיון [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). באנר העוגיות — [vanilla-cookieconsent](https://github.com/orestbida/cookieconsent) מאת Orest Bida, ברישיון MIT (`assets/cookie-consent/vendor/LICENSE`).
 
 ---
 

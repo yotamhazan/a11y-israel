@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Cookie consent fixture</title>
+    <link rel="icon" href="data:," />
+    <link rel="stylesheet" href="/plugins/a11y-israel/skills/israel-web-compliance/assets/cookie-consent/vendor/cookieconsent.css" />
+    <link rel="stylesheet" href="/plugins/a11y-israel/skills/israel-web-compliance/assets/cookie-consent/cookie-consent.theme.css" />
+    <script src="/plugins/a11y-israel/skills/israel-web-compliance/assets/cookie-consent/vendor/cookieconsent.umd.js"></script>
+    <script src="/plugins/a11y-israel/skills/israel-web-compliance/assets/cookie-consent/cookie-consent.config.js"></script>
+    <!-- Stand-ins for trackers: they must not run before consent. -->
+    <script type="text/plain" data-category="analytics">window.analyticsRan = true;</script>
+    <script type="text/plain" data-category="marketing">window.marketingRan = true;</script>
+  </head>
+  <body>
+    <main><h1>בדיקת עוגיות</h1></main>
+    <footer><button type="button" data-cc="show-preferencesModal">הגדרות עוגיות</button></footer>
+  </body>
+</html>
