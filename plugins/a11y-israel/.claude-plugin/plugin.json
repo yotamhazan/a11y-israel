@@ -1,0 +1,10 @@
+{
+  "name": "a11y-israel",
+  "version": "2.0.0",
+  "description": "Israeli web compliance for Claude Code: audits sites against SI 5568 part 1 (AA) and the Privacy Protection Law incl. amendment 13, and installs a self-contained Hebrew/English accessibility menu in any project.",
+  "author": { "name": "yotamhazan" },
+  "homepage": "https://github.com/yotamhazan/a11y-israel",
+  "repository": "https://github.com/yotamhazan/a11y-israel",
+  "license": "MIT",
+  "keywords": ["accessibility", "a11y", "israel", "wcag", "si-5568", "privacy", "hebrew", "rtl"]
+}

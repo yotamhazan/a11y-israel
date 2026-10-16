@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Config fixture</title>
+    <link rel="icon" href="data:," />
+  </head>
+  <body style="margin: 0">
+    <main><h1>בדיקה</h1></main>
+    <script>
+      // ?style=&size=&pos= drive the widget config, so one page covers every combination.
+      var q = new URLSearchParams(location.search);
+      window.A11yWidgetConfig = { iconStyle: q.get('style'), size: q.get('size'), position: q.get('pos'), statementUrl: '/s' };
+    </script>
+    <script src="/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js"></script>
+  </body>
+</html>

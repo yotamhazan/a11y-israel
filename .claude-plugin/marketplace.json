@@ -1,0 +1,12 @@
+{
+  "name": "a11y-israel",
+  "description": "נגישות ופרטיות לאתרים בישראל: סקיל בדיקה לפי ת\"י 5568 ותיקון 13, ותפריט נגישות עצמאי לכל אתר",
+  "owner": { "name": "yotamhazan" },
+  "plugins": [
+    {
+      "name": "a11y-israel",
+      "source": "./plugins/a11y-israel",
+      "description": "Israeli web compliance (SI 5568 accessibility, Privacy Protection Law amendment 13) plus a self-contained accessibility menu for any website"
+    }
+  ]
+}

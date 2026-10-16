@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>הגדרת תפריט הנגישות</title>
+    <style>
+      :root {
+        --navy: #0a2353;
+        --blue: #1450c8;
+        --sky: #a9c8f5;
+        --pale: #eef4fd;
+        --line: #d3e0f5;
+      }
+      * { box-sizing: border-box; }
+      body { margin: 0; font: 16px/1.5 system-ui, -apple-system, 'Segoe UI', Arial, sans-serif; color: var(--navy); background: var(--pale); }
+      header { background: #fff; border-bottom: 1px solid var(--line); padding: 20px 24px; display: flex; align-items: center; gap: 14px; }
+      header h1 { margin: 0; font-size: 24px; font-weight: 800; }
+      header p { margin: 0; color: #3f4b63; font-size: 14px; }
+      main { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 24px; padding: 24px; max-width: 1200px; margin: 0 auto; }
+      @media (max-width: 860px) { main { grid-template-columns: 1fr; padding: 16px; } }
+      form { display: flex; flex-direction: column; gap: 18px; }
+      fieldset { margin: 0; border: 1.5px solid var(--line); border-radius: 16px; background: #fff; padding: 14px 16px 16px; }
+      legend { font-weight: 800; padding: 0 6px; display: flex; align-items: center; gap: 8px; }
+      legend::before { content: ''; width: 14px; height: 4px; border-radius: 2px; background: var(--blue); }
+      .options { display: grid; gap: 8px; grid-template-columns: repeat(2, 1fr); }
+      .options.three { grid-template-columns: repeat(3, 1fr); }
+      .opt { position: relative; }
+      .opt input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+      .opt label { display: flex; align-items: center; gap: 10px; min-height: 52px; padding: 8px 12px; border: 1.5px solid var(--line); border-radius: 12px; font-weight: 600; cursor: pointer; }
+      .opt input:checked + label { border-color: var(--blue); background: var(--pale); box-shadow: inset 0 0 0 1.5px var(--blue); }
+      .opt input:focus-visible + label { outline: 3px solid #f5b400; outline-offset: 2px; }
+      .swatch { width: 34px; height: 34px; border-radius: 50%; flex: none; display: flex; align-items: center; justify-content: center; box-shadow: 0 1px 4px rgba(10, 35, 83, .25); }
+      .text-field label { display: block; font-weight: 700; margin-bottom: 6px; }
+      .text-field input { width: 100%; padding: 10px 12px; border: 1.5px solid var(--line); border-radius: 10px; font: inherit; direction: ltr; text-align: left; }
+      .text-field input:focus-visible { outline: 3px solid #f5b400; outline-offset: 1px; }
+      .text-field small { display: block; color: #3f4b63; margin-top: 4px; }
+      .preview-wrap { display: flex; flex-direction: column; gap: 16px; }
+      .preview { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; overflow: hidden; }
+      .preview h2, .code h2 { margin: 0; font-size: 16px; font-weight: 800; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+      iframe { display: block; width: 100%; height: 560px; border: 0; }
+      .code { background: #fff; border: 1.5px solid var(--line); border-radius: 16px; }
+      .code textarea { display: block; width: 100%; min-height: 120px; border: 0; padding: 14px 16px; font: 14px/1.6 ui-monospace, Consolas, monospace; direction: ltr; text-align: left; resize: vertical; color: var(--navy); background: #fff; border-radius: 0 0 16px 16px; }
+      .code textarea:focus-visible { outline: 3px solid #f5b400; outline-offset: -3px; }
+      .actions { display: flex; align-items: center; gap: 12px; padding: 0 16px 14px; }
+      .copy { border: 0; border-radius: 10px; padding: 10px 18px; background: var(--blue); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+      .copy:focus-visible { outline: 3px solid #f5b400; outline-offset: 2px; }
+      .status { font-weight: 600; color: #166534; }
+      .note { font-size: 14px; color: #3f4b63; margin: 0; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <svg aria-hidden="true" width="44" height="44" viewBox="0 0 512 512"><circle cx="256" cy="256" r="256" fill="#154f92"/><path fill="#fff" id="ua"/></svg>
+      <div>
+        <h1>הגדרת תפריט הנגישות</h1>
+        <p>בוחרים איך הכפתור ייראה ואיפה יופיע, ומעתיקים את השורה לאתר.</p>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <form id="config" aria-describedby="form-help">
+        <p id="form-help" class="note">כל שינוי מתעדכן מיד בתצוגה המקדימה ובקוד להעתקה.</p>
+
+        <fieldset>
+          <legend>צבע האייקון</legend>
+          <div class="options" id="styles"></div>
+        </fieldset>
+
+        <fieldset>
+          <legend>גודל</legend>
+          <div class="options three">
+            <div class="opt"><input type="radio" name="size" id="size-small" value="small" /><label for="size-small">קטן (44px)</label></div>
+            <div class="opt"><input type="radio" name="size" id="size-medium" value="medium" checked /><label for="size-medium">בינוני (56px)</label></div>
+            <div class="opt"><input type="radio" name="size" id="size-large" value="large" /><label for="size-large">גדול (68px)</label></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>מיקום במסך</legend>
+          <div class="options">
+            <div class="opt"><input type="radio" name="position" id="pos-tr" value="top-right" /><label for="pos-tr">למעלה מימין</label></div>
+            <div class="opt"><input type="radio" name="position" id="pos-tl" value="top-left" /><label for="pos-tl">למעלה משמאל</label></div>
+            <div class="opt"><input type="radio" name="position" id="pos-mr" value="middle-right" /><label for="pos-mr">באמצע מימין</label></div>
+            <div class="opt"><input type="radio" name="position" id="pos-ml" value="middle-left" /><label for="pos-ml">באמצע משמאל</label></div>
+            <div class="opt"><input type="radio" name="position" id="pos-br" value="bottom-right" checked /><label for="pos-br">למטה מימין</label></div>
+            <div class="opt"><input type="radio" name="position" id="pos-bl" value="bottom-left" /><label for="pos-bl">למטה משמאל</label></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>שפת התפריט</legend>
+          <div class="options three">
+            <div class="opt"><input type="radio" name="lang" id="lang-auto" value="auto" checked /><label for="lang-auto">לפי האתר</label></div>
+            <div class="opt"><input type="radio" name="lang" id="lang-he" value="he" /><label for="lang-he">עברית</label></div>
+            <div class="opt"><input type="radio" name="lang" id="lang-en" value="en" /><label for="lang-en">English</label></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>מאיפה לטעון את התפריט</legend>
+          <div class="options">
+            <div class="opt"><input type="radio" name="load" id="load-self" value="self" checked aria-describedby="load-help" /><label for="load-self">מהאתר שלי (מומלץ)</label></div>
+            <div class="opt"><input type="radio" name="load" id="load-cdn" value="cdn" aria-describedby="load-help" /><label for="load-cdn">ישירות מ-GitHub</label></div>
+          </div>
+          <p class="note" id="load-help" style="margin-top: 10px">
+            מהאתר שלי: מעתיקים את a11y-widget.js לאתר, בלי שום גורם חיצוני. ישירות מ-GitHub: בלי להעתיק קבצים (מתאים ל-Wix
+            וכו'), אבל הקובץ נטען משרת jsDelivr — צריך לציין את זה במדיניות הפרטיות.
+          </p>
+        </fieldset>
+
+        <fieldset>
+          <legend>פרטים נוספים</legend>
+          <div class="text-field">
+            <label for="statement">כתובת עמוד הצהרת הנגישות</label>
+            <input id="statement" type="text" value="/accessibility" aria-describedby="statement-help" />
+            <small id="statement-help">יופיע כקישור בתחתית התפריט. חובה לפרסם הצהרת נגישות באתר.</small>
+          </div>
+          <div class="text-field" id="src-field" style="margin-top: 14px">
+            <label for="src">כתובת הקובץ באתר</label>
+            <input id="src" type="text" value="/a11y-widget.js" aria-describedby="src-help" />
+            <small id="src-help">איפה שמרתם את a11y-widget.js בפרויקט.</small>
+          </div>
+        </fieldset>
+      </form>
+
+      <div class="preview-wrap">
+        <section class="preview" aria-labelledby="preview-title">
+          <h2 id="preview-title">תצוגה מקדימה</h2>
+          <iframe id="frame" title="תצוגה מקדימה של אתר עם תפריט הנגישות"></iframe>
+        </section>
+
+        <section class="code" aria-labelledby="code-title">
+          <h2 id="code-title">הקוד להתקנה — להדביק לפני &lt;/body&gt;</h2>
+          <textarea id="snippet" readonly aria-labelledby="code-title" spellcheck="false"></textarea>
+          <div class="actions">
+            <button type="button" class="copy" id="copy">העתקת הקוד</button>
+            <span class="status" id="copy-status" role="status" aria-live="polite"></span>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <script>
+      (function () {
+        var UA =
+          'M256 48c114.953 0 208 93.029 208 208 0 114.953-93.029 208-208 208-114.953 0-208-93.029-208-208 0-114.953 93.029-208 208-208m0-40C119.033 8 8 119.033 8 256s111.033 248 248 248 248-111.033 248-248S392.967 8 256 8zm0 56C149.961 64 64 149.961 64 256s85.961 192 192 192 192-85.961 192-192S362.039 64 256 64zm0 44c19.882 0 36 16.118 36 36s-16.118 36-36 36-36-16.118-36-36 16.118-36 36-36zm117.741 98.023c-28.712 6.779-55.511 12.748-82.14 15.807.851 101.023 12.306 123.052 25.037 155.621 3.617 9.26-.957 19.698-10.217 23.315-9.261 3.617-19.699-.957-23.316-10.217-8.705-22.308-17.086-40.636-22.261-78.549h-9.686c-5.167 37.851-13.534 56.208-22.262 78.549-3.615 9.255-14.05 13.836-23.315 10.217-9.26-3.617-13.834-14.056-10.217-23.315 12.713-32.541 24.185-54.541 25.037-155.621-26.629-3.058-53.428-9.027-82.141-15.807-8.6-2.031-13.926-10.648-11.895-19.249s10.647-13.926 19.249-11.895c96.686 22.829 124.283 22.783 220.775 0 8.599-2.03 17.218 3.294 19.249 11.895 2.029 8.601-3.297 17.219-11.897 19.249z';
+        document.getElementById('ua').setAttribute('d', UA);
+
+        var STYLES = [
+          { value: 'blue-white', label: 'כחול על לבן', fg: '#154f92', bg: '#ffffff' },
+          { value: 'white-blue', label: 'לבן על כחול', fg: '#ffffff', bg: '#154f92' },
+          { value: 'black-white', label: 'שחור על לבן', fg: '#000000', bg: '#ffffff' },
+          { value: 'white-black', label: 'לבן על שחור', fg: '#ffffff', bg: '#000000' },
+        ];
+        var stylesBox = document.getElementById('styles');
+        stylesBox.innerHTML = STYLES.map(function (s, i) {
+          return (
+            '<div class="opt"><input type="radio" name="iconStyle" id="st-' + s.value + '" value="' + s.value + '"' +
+            (i === 0 ? ' checked' : '') + ' /><label for="st-' + s.value + '"><span class="swatch" style="background:' + s.bg +
+            ';color:' + s.fg + '"><svg aria-hidden="true" width="34" height="34" viewBox="0 0 512 512"><path fill="currentColor" d="' +
+            UA + '"/></svg></span>' + s.label + '</label></div>'
+          );
+        }).join('');
+
+        var form = document.getElementById('config');
+        var frame = document.getElementById('frame');
+        var snippet = document.getElementById('snippet');
+        var widgetUrl = new URL('a11y-widget.js', location.href).href;
+        // Pinned to a release tag so an existing site never changes under its owner.
+        var CDN_URL =
+          'https://cdn.jsdelivr.net/gh/yotamhazan/a11y-israel@v2.0.0/plugins/a11y-israel/skills/israel-web-compliance/assets/a11y-widget/a11y-widget.js';
+
+        function value(name) {
+          var el = form.querySelector('input[name="' + name + '"]:checked');
+          return el ? el.value : '';
+        }
+        function esc(s) {
+          return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+        }
+
+        function update() {
+          var cfg = {
+            'icon-style': value('iconStyle'),
+            size: value('size'),
+            position: value('position'),
+            lang: value('lang'),
+            'statement-url': document.getElementById('statement').value.trim(),
+          };
+          var attrs = Object.keys(cfg)
+            .filter(function (k) {
+              if (!cfg[k]) return false;
+              // Leave defaults out so the pasted line stays short.
+              return !((k === 'lang' && cfg[k] === 'auto') || (k === 'size' && cfg[k] === 'medium'));
+            })
+            .map(function (k) {
+              return 'data-' + k + '="' + esc(cfg[k]) + '"';
+            });
+          var fromCdn = value('load') === 'cdn';
+          document.getElementById('src-field').hidden = fromCdn;
+          var src = fromCdn ? CDN_URL : document.getElementById('src').value.trim() || '/a11y-widget.js';
+          snippet.value = '<script src="' + esc(src) + '"\n        ' + attrs.join('\n        ') + '\n        defer></' + 'script>';
+
+          var previewAttrs = attrs.concat(['data-storage-key="a11yw_preview"']).join(' ');
+          frame.srcdoc =
+            '<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8"><style>' +
+            'body{margin:0;font:16px/1.6 system-ui,Arial,sans-serif;color:#18181b;background:#fafafa}' +
+            'header{background:#fff;padding:14px 20px;border-bottom:1px solid #e4e4e7;font-weight:700}' +
+            'main{padding:24px 20px;max-width:640px}h1{margin-top:0}.card{background:#fff;border:1px solid #e4e4e7;border-radius:12px;padding:16px;margin:16px 0}' +
+            '</style></head><body><header>האתר שלכם</header><main><h1>עמוד לדוגמה</h1>' +
+            '<p>כך ייראה הכפתור באתר. לחצו עליו כדי לראות את התפריט ולנסות את ההתאמות.</p>' +
+            '<div class="card"><h2>כותרת משנה</h2><p>טקסט לדוגמה עם <a href="#">קישור</a>.</p></div></main>' +
+            '<script src="' + esc(widgetUrl) + '" ' + previewAttrs + '></' + 'script></body></html>';
+        }
+
+        form.addEventListener('change', update);
+        var typing;
+        form.addEventListener('input', function (e) {
+          if (e.target.type !== 'text') return;
+          clearTimeout(typing);
+          typing = setTimeout(update, 300);
+        });
+
+        var status = document.getElementById('copy-status');
+        document.getElementById('copy').addEventListener('click', function () {
+          var done = function () {
+            status.textContent = 'הקוד הועתק';
+            setTimeout(function () {
+              status.textContent = '';
+            }, 2500);
+          };
+          if (navigator.clipboard && window.isSecureContext) {
+            navigator.clipboard.writeText(snippet.value).then(done, function () {
+              snippet.select();
+              document.execCommand('copy');
+              done();
+            });
+          } else {
+            snippet.select();
+            document.execCommand('copy');
+            done();
+          }
+        });
+
+        update();
+      })();
+    </script>
+  </body>
+</html>

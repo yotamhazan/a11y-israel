@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>דמו — תפריט נגישות</title>
+    <style>
+      body { margin: 0; font-family: system-ui, Arial, sans-serif; background: #f8fafc; color: #18181b; }
+      header, footer { background: #fff; padding: 1rem 1.5rem; border-bottom: 1px solid #e4e4e7; }
+      footer { border-top: 1px solid #e4e4e7; border-bottom: 0; margin-top: 3rem; }
+      nav a { margin-inline-end: 1rem; color: #4338ca; }
+      main { max-width: 48rem; margin: 0 auto; padding: 2rem 1.5rem; }
+      h1 { font-size: 2.25rem; }
+      .card { background: linear-gradient(135deg, #ede9fe, #e0f2fe); border-radius: 1rem; padding: 1.5rem; margin: 1.5rem 0; }
+      .pulse { display: inline-block; width: 1rem; height: 1rem; border-radius: 50%; background: #7c3aed; animation: pulse 1s infinite alternate; }
+      @keyframes pulse { to { transform: scale(1.6); opacity: .4; } }
+      button.cta { font-size: 1rem; padding: .75rem 1.5rem; border-radius: 999px; border: 0; background: #4338ca; color: #fff; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav aria-label="ראשי">
+        <a href="#">דף הבית</a><a href="#">מחירים</a><a href="#">צור קשר</a>
+      </nav>
+    </header>
+    <main>
+      <h1>אתר לדוגמה</h1>
+      <p>
+        זה עמוד דמו לבדיקת תפריט הנגישות. לחצו על הכפתור הכחול בפינה, או על Alt+A, ונסו את ההתאמות.
+        לחיצה ראשונה על Tab מציגה את הקישור "דילוג לתוכן הראשי".
+      </p>
+      <div class="card">
+        <h2>כרטיס עם רקע צבעוני <span class="pulse" aria-hidden="true"></span></h2>
+        <p>טקסט על רקע גרדיאנט, <a href="#">קישור בתוך טקסט</a>, ואנימציה שאפשר לעצור.</p>
+        <button class="cta" type="button">כפתור פעולה</button>
+      </div>
+      <h2>כותרת משנה</h2>
+      <p>עוד פסקה לבדיקת ריווח שורות, ריווח אותיות, גופן קריא והגדלת טקסט עד 200%.</p>
+      <img
+        alt="ריבוע סגול עם עיגול צהוב במרכזו"
+        width="160"
+        height="100"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='100'%3E%3Crect width='160' height='100' fill='%237c3aed'/%3E%3Ccircle cx='80' cy='50' r='30' fill='%23facc15'/%3E%3C/svg%3E"
+      />
+    </main>
+    <footer>
+      <a href="accessibility-statement.he.html">הצהרת נגישות</a>
+    </footer>
+
+    <script src="a11y-widget.js" data-statement-url="accessibility-statement.he.html" defer></script>
+  </body>
+</html>
